@@ -1,0 +1,12 @@
+.login,
+.image {
+  min-height: 100vh;
+}
+a {
+    color: #FFF;
+  }
+.bg-image {
+  background-image: url(https://www.bcsconsulting.com/wp-content/uploads/2018/12/bank-system-tile.png);
+  background-size: cover;
+  background-position: center center;
+}

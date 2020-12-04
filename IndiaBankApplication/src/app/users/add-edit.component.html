@@ -1,0 +1,284 @@
+﻿<div class="py-5 container">
+    <div class="card">
+    <h4 class="card-header" [ngStyle]="{'text-align': 'center'}">India Bank Registration Form</h4>
+    
+    <div class="card-body">
+        <h1 *ngIf="isAddMode">Add User</h1>
+        <h1 *ngIf="!isAddMode" style="font-family: 'Lato', sans-serif; font-size: 30px; font-weight: 100;">Personal Details</h1>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="name">Name</label>
+                        <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.name.errors.required"> Name is required</div>
+                            <div *ngIf="f.name.errors.pattern">
+                                Name not valid.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email">Email</label>
+                        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email is required</div>
+                            <div *ngIf="f.email.errors.email">Email not Valid</div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="username">Username</label>
+                        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                            <div *ngIf="f.username.errors.required">Username is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="password">Password</label>
+                        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="guardianType">Guardian Type</label>
+                        <!-- <input type="text" formControlName="guardianType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.guardianType.errors }" /> -->
+                        <select [(ngModel)]="user.guardianType" formControlName="guardianType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.guardianType.errors }">
+                            <option>Choose Guardian</option>
+                            <option *ngFor="let gaurdian of gaurdians">{{gaurdian}}</option>            
+                           
+                        </select>                                                                     
+                        <div *ngIf="submitted && f.guardianType.errors" class="invalid-feedback">
+                            <div *ngIf="f.guardianType.errors.required">Guardian Type is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="guardianName">Guardian Name</label>
+                        <input type="text" formControlName="guardianName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.guardianName.errors }" />
+                        <div *ngIf="submitted && f.guardianName.errors" class="invalid-feedback">
+                            <div *ngIf="f.guardianName.errors.required">Password is required</div>
+                        
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="address" formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+                <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                    <div *ngIf="f.address.errors.required">Address is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="citizenship">Citizenship</label>
+                        <input type="text" formControlName="citizenship" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.citizenship.errors }" />
+                        <div *ngIf="submitted && f.citizenship.errors" class="invalid-feedback">
+                            <div *ngIf="f.citizenship.errors.required">Citizenship is required</div>                       
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="country">Country</label>
+                        <!-- <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" /> -->
+                        <select [(ngModel)]="user.country" formControlName="country" class="form-control" 
+                        [ngClass]="{ 'is-invalid': submitted && f.country.errors }">
+                            <option [value]="">Choose Country</option>
+                            <option *ngFor="let country of countries">{{country}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                            <div *ngIf="f.country.errors.required">Country is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="state">State</label>
+                        <select formControlName="state" class="form-control" 
+                        *ngIf="user.country || true" [(ngModel)]="user.state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }">                          
+                            <option>Choose State</option>
+                            <option *ngFor="let state of states">{{state}}</option>
+                        </select>
+                        <!-- <input type="text" formControlName="state" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" /> -->
+                        <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                            <div *ngIf="f.state.errors.required">State is required</div>
+                        </div>
+                    </div>
+                   
+                </div>    
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="gender">Gender</label>
+                        <!-- <input type="text" formControlName="gender" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.gender.errors }" /> -->
+                        <select [(ngModel)]="user.gender" formControlName="gender" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.gender.errors }">
+                            <option>Choose Gender</option>
+                            <option *ngFor="let gender of genders">{{gender}}</option>            
+                           
+                        </select>
+                        <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+                            <div *ngIf="f.gender.errors.required">Gender is required</div>
+                        
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="maritalStatus">Martial status</label>
+                        <select [(ngModel)]="user.maritalStatus" formControlName="maritalStatus" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.maritalStatus.errors }">
+                            <option value="">Choose marital Status</option>
+                            <option *ngFor="let mar of maritals">{{mar}}</option>
+                        </select>
+                        <!-- <input type="text" formControlName="maritalStatus" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.maritalStatus.errors }" /> -->
+                        <div *ngIf="submitted && f.maritalStatus.errors" class="invalid-feedback">
+                            <div *ngIf="f.maritalStatus.errors.required">Marital is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="contact">Contact No</label>
+                        <input type="number" formControlName="contact" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contact.errors }" />
+                        <div *ngIf="submitted && f.contact.errors" class="invalid-feedback">
+                            <div *ngIf="f.contact.errors.required">Contact no is required</div>
+                            <div *ngIf="f.contact.errors.minlength">Contact no min should be 10 digit</div>
+                            <div *ngIf="f.contact.errors.maxlength">Contact no max should be 10 digit</div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date"[(ngModel)]="user.dob" (blur)="CalculateCitizenStatus()" formControlName="dob" class="form-control" 
+                        [ngClass]="{ 'is-invalid': submitted && f.dob.errors }" />
+                        <div *ngIf="submitted && f.dob.errors" class="invalid-feedback">
+                            <div *ngIf="f.dob.errors.required">Date of Birth is required</div>
+                        
+                        </div>
+                    </div>
+                    <div class="col-md-4" >
+                        <label for="regDate">Registration Date</label>
+                        
+                        <input type="text"  formControlName="regDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.regDate.errors }" />
+                        
+                        <div *ngIf="submitted && f.regDate.errors" class="invalid-feedback">
+                            <div *ngIf="f.regDate.errors.required">Registration Date is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="citizenStatus">Citizen status</label>
+                        <input type="text" [(ngModel)]="user.citizenStatus"formControlName="citizenStatus" class="form-control" 
+                        [ngClass]="{ 'is-invalid': submitted && f.citizenStatus.errors }" />
+                        <div *ngIf="submitted && f.citizenStatus.errors" class="invalid-feedback">
+                            <div *ngIf="f.citizenStatus.errors.required">Citizen Status is required</div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+            <div class="form-group">
+                <h1 style="font-family: 'Lato', sans-serif; font-size: 30px; font-weight: 100;">Account Details</h1>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="accountType">Account Type</label>
+                        <!-- <input type="text" formControlName="accountType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.accountType.errors }" /> -->
+                        <select [(ngModel)]="user.accountType"  formControlName="accountType" 
+                        (change)="selectAccountType($event)"class="form-control" [ngClass]="{ 'is-invalid': submitted && f.accountType.errors }">
+                            <option value="">Chooose Account Type</option>
+                            <option *ngFor="let acc of accounttypes">{{acc}}</option>
+                            
+                            
+                            
+                           
+                        </select>                        
+                        <div *ngIf="submitted && f.accountType.errors" class="invalid-feedback">
+                            <div *ngIf="f.accountType.errors.required">Account Type is required</div>
+                        
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="branchName">Branch Name</label>
+                        <input type="text" formControlName="branchName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.branchName.errors }" />
+                        <div *ngIf="submitted && f.branchName.errors" class="invalid-feedback">
+                            <div *ngIf="f.branchName.errors.required">Branch Name is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="intDeposit">Initial Deposit Amount</label>
+                        <input type="text" [(ngModel)]="user.intDeposit" formControlName="intDeposit" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.intDeposit.errors }" />
+                        <div *ngIf="submitted && f.intDeposit.errors" class="invalid-feedback">
+                            <div *ngIf="f.intDeposit.errors.required">Initial Deposit Amont is required</div>
+                          
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            
+            
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="identificationProof">Identification Proof Type</label>
+                        <!-- <input type="text" formControlName="idtype" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idtype.errors }" /> -->
+                        <select [(ngModel)]="user.identificationProof" formControlName="identificationProof" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.identificationProof.errors }">
+                            <option value="">Identification Proof type</option>
+                            <option *ngFor="let proof of identificationProofs">{{proof}}</option>                                                                                 
+                        </select>
+                        <div *ngIf="submitted && f.identificationProof.errors" class="invalid-feedback">
+                            <div *ngIf="f.identificationProof.errors.required">Identification Proof Type is required</div>
+                         </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="identificationDoc">Identification Document No</label>
+                        <input type="text" formControlName="identificationDoc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.identificationDoc.errors }" />
+                        <div *ngIf="submitted && f.identificationDoc.errors" class="invalid-feedback">
+                            <div *ngIf="f.identificationDoc.errors.required">Identification Document No is required</div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+            <div class="form-group">
+                <h1 style="font-family: 'Lato', sans-serif; font-size: 30px; font-weight: 100;">Reference Details</h1>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="refAccountHolderName">Reference Account Holder Name</label>
+                        <input type="text" formControlName="refAccountHolderName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.refAccountHolderName.errors }" />
+                        <div *ngIf="submitted && f.refAccountHolderName.errors" class="invalid-feedback">
+                            <div *ngIf="f.refAccountHolderName.errors.required">Reference Account Holder Name is required</div>
+                        
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="refAccountHolderNo">Reference Holder Account No</label>
+                        <input type="text" formControlName="refAccountHolderNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.refAccountHolderNo.errors }" />
+                        <div *ngIf="submitted && f.refAccountHolderNo.errors" class="invalid-feedback">
+                            <div *ngIf="f.refAccountHolderNo.errors.required">Reference Holder Account No is required</div>
+                         </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="refAccountHolderAddress">Reference Account Holder Address</label>
+                        <input type="text" formControlName="refAccountHolderAddress" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.refAccountHolderAddress.errors }" />
+                        <div *ngIf="submitted && f.refAccountHolderAddress.errors" class="invalid-feedback">
+                            <div *ngIf="f.refAccountHolderAddress.errors.required">Reference Account Holder Address is required</div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+        </button>
+        <a routerLink="/users" class="btn btn-link">Cancel</a>
+    </div>
+</form>
+</div>
+</div>
+</div>

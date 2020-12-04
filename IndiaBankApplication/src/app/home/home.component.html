@@ -1,0 +1,260 @@
+﻿<div style="margin-top: 50px;" class="container">
+    <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Loan Submitted Successfully!!</strong> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <div class="card">
+    <h4 class="card-header">Apply Loan</h4>  
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="col-md-12 no-padding">
+          <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="loanType">Loan Type</label>
+                    <!-- <input type="text" formControlName="guardianType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.guardianType.errors }" /> -->
+                    <select [(ngModel)]="user.loanType" formControlName="loanType" class="form-control"
+                   (change)="selectroi($event)"[ngClass]="{ 'is-invalid': submitted && f.loanType.errors }" [(ngModel)]="optionValue">
+                      <option value="" selected> </option>
+                      <option value="eduloan" >Education Loan</option>
+                      <option value="perloan">Personal Loan</option>                 
+                  </select>                                                                     
+                  <div *ngIf="submitted && f.loanType.errors" class="invalid-feedback">
+                      <div *ngIf="f.loanType.errors.required">Loan  Type is required</div>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <label for="loanAmount">Loan Amount</label>
+                  <input type="number" formControlName="loanAmount" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.loanAmount.errors }" />
+                  <div *ngIf="submitted && f.loanAmount.errors" class="invalid-feedback">
+                      <div *ngIf="f.loanAmount.errors.required">Loan Amount is required</div>
+                  
+                  </div>
+              </div>
+            </div>    
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                  <label for="loanApplyDate">Loan Apply Date</label>
+                  <input type="date" formControlName="loanApplyDate" class="form-control" 
+                  [ngClass]="{ 'is-invalid': submitted && f.loanApplyDate.errors }" />
+                  <div *ngIf="submitted && f.loanApplyDate.errors" class="invalid-feedback">
+                      <div *ngIf="f.loanApplyDate.errors.required">Loan Apply Date is required</div>
+                  
+                  </div>
+              </div>
+              <div class="col-md-6">
+                <label for="loanIssueDate">Loan Issue Date</label>
+                <input type="date" formControlName="loanIssueDate" class="form-control" 
+                [ngClass]="{ 'is-invalid': submitted && f.loanIssueDate.errors }" />
+                <div *ngIf="submitted && f.loanIssueDate.errors" class="invalid-feedback">
+                    <div *ngIf="f.loanIssueDate.errors.required">Loan Issue Date is required</div>
+                
+                </div>
+    
+              </div>
+            </div>
+          </div>
+    
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="roi">Rate of Interest</label>
+                <input type="number" [(ngModel)]="user.roi" formControlName="roi" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.roi.errors }" />
+                <div *ngIf="submitted && f.roi.errors" class="invalid-feedback">
+                  <div *ngIf="f.roi.errors.required">Rate of Interest is required</div>
+              
+                </div>
+              </div>
+              <div class="col-md-6">
+                  <label for="loanDuration ">Duration Of Loan</label>
+                  <!-- <input type="text" formControlName="guardianType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.guardianType.errors }" /> -->
+                  <select formControlName="loanDuration" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.loanDuration.errors }">
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="15">15</option>                 
+                  </select>                                                                     
+                  <div *ngIf="submitted && f.loanDuration.errors" class="invalid-feedback">
+                      <div *ngIf="f.loanDuration.errors.required">Loan Duartion is required</div>
+                  </div>
+              </div>
+              
+            </div>    
+          </div>
+
+          
+        </div>
+        
+        <!-- Educationloan -->
+        <ng-container *ngIf="optionValue == 'eduloan'">
+          <div class="col-md-12 no-padding" >
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="courseFee">Course Fee</label>
+                <input type="number" formControlName="courseFee" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.courseFee.errors }" />
+                <div *ngIf="submitted && f.courseFee.errors" class="invalid-feedback">
+                    <div *ngIf="f.courseFee.errors.required">Course Fee is required</div>
+                
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="course">Course </label>
+                <input type="text" formControlName="course" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.course.errors }" />
+                <div *ngIf="submitted && f.course.errors" class="invalid-feedback">
+                    <div *ngIf="f.course.errors.required">Course is required</div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="fatherName">Father Name</label>
+                <input type="text" formControlName="fatherName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.fatherName.errors }" />
+                <div *ngIf="submitted && f.fatherName.errors" class="invalid-feedback">
+                    <div *ngIf="f.fatherName.errors.required">Father name is required</div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="fatherOccupation">Father Occupation</label>
+                <input type="text" formControlName="fatherOccupation" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.fatherOccupation.errors }" />
+                <div *ngIf="submitted && f.fatherOccupation.errors" class="invalid-feedback">
+                    <div *ngIf="f.fatherOccupation.errors.required">Father Ocupation is required</div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="fatherTotalExperience">Father Total Experience</label>
+                <input type="number" formControlName="fatherTotalExperience" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.fatherTotalExperience.errors }" />
+                <div *ngIf="submitted && f.fatherTotalExperience.errors" class="invalid-feedback">
+                    <div *ngIf="f.fatherTotalExperience.errors.required">Father Total Experience is required</div>
+                
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="fatherCurrentExperience">Father Current Experience</label>
+                <input type="number" formControlName="fatherCurrentExperience" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.fatherCurrentExperience.errors }" />
+                <div *ngIf="submitted && f.fatherCurrentExperience.errors" class="invalid-feedback">
+                    <div *ngIf="f.fatherCurrentExperience.errors.required">Father Current Experience is required</div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="rationCard">Ration Card no</label>
+                <input type="number" formControlName="rationCard" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.rationCard.errors }" />
+                <div *ngIf="submitted && f.rationCard.errors" class="invalid-feedback">
+                    <div *ngIf="f.rationCard.errors.required">Ration Card No is required</div>
+                
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="annualIncome">Annula Income</label>
+                <input type="number" formControlName="annualIncome" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.annualIncome.errors }" />
+                <div *ngIf="submitted && f.annualIncome.errors" class="invalid-feedback">
+                    <div *ngIf="f.annualIncome.errors.required">Annual Income is required</div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </ng-container>
+      <!-- personal loan -->
+      <ng-container *ngIf="optionValue == 'perloan'">
+        <div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="annualIncome">Annual Income</label>
+                <input type="number" formControlName="annualIncome" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.annualIncome.errors }" />
+                <div *ngIf="submitted && f.annualIncome.errors" class="invalid-feedback">
+                    <div *ngIf="f.annualIncome.errors.required">Annual Income is required</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="companyName">Company Name</label>
+                <input type="text" formControlName="companyName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.companyName.errors }" />
+                <div *ngIf="submitted && f.companyName.errors" class="invalid-feedback">
+                    <div *ngIf="f.companyName.errors.required">Company Name is required</div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="designation">Designation</label>
+                <input type="text" formControlName="designation" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.designation.errors }" />
+                <div *ngIf="submitted && f.designation.errors" class="invalid-feedback">
+                    <div *ngIf="f.designation.errors.required">Designation is required</div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="totalExperience">Total Experience</label>
+                <input type="number" formControlName="totalExperience" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.totalExperience.errors }" />
+                <div *ngIf="submitted && f.totalExperience.errors" class="invalid-feedback">
+                    <div *ngIf="f.totalExperience.errors.required">Total Experience is required</div>
+                
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="currentExperience">Current Experience</label>
+                <input type="number" formControlName="currentExperience" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.currentExperience.errors }" />
+                <div *ngIf="submitted && f.currentExperience.errors" class="invalid-feedback">
+                    <div *ngIf="f.currentExperience.errors.required">Current Experience is required</div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+  
+      </ng-container>
+      
+      <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+        <button [disabled]="loading" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Submit
+        </button>
+    </div>
+        <div class="col-md-6">
+        <button [disabled]="loading" (click)="clearForm(form)" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" >
+            Reset loan
+        </button>
+    </div>
+    </div>
+</div>
+      
+    </form>
+    </div> 
+    <div>
+  
